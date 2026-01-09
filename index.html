@@ -3,898 +3,1085 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TopLabsBazaar - Interview Portal</title>
+    <title>TopLabsBazaar - Assessment Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --danger: #ef4444;
-            --success: #22c55e;
-            --bg-gray: #f1f5f9;
-            --border: #e2e8f0;
+            --primary: #4f46e5; /* Indigo */
+            --primary-dark: #3730a3;
+            --bg-body: #f3f4f6;
+            --surface: #ffffff;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --success-bg: #ecfdf5;
+            --success-text: #059669;
+            --danger-bg: #fef2f2;
+            --danger-text: #dc2626;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background-color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
             margin: 0;
-            padding: 20px;
-            color: var(--primary);
+            padding-top: 80px; /* Space for sticky header */
+            padding-bottom: 40px;
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        /* --- Header & Form --- */
-        header {
-            border-bottom: 3px solid var(--danger);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .brand-title {
-            color: var(--danger);
-            font-size: 24px;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            font-size: 12px;
-            font-weight: bold;
-            color: #64748b;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 16px;
-            box-sizing: border-box;
-            background-color: #fff;
-        }
-
-        /* --- Sections --- */
-        .role-section {
-            display: none; /* Hidden by default */
-        }
-        .role-section.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-
-        .section-header {
-            background: var(--primary);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        /* --- Question Cards --- */
-        .question-card {
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-bottom: 25px;
-            background: white;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .q-header {
-            background: var(--bg-gray);
-            padding: 12px 20px;
+        /* --- Sticky Header --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
-            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-content {
+            width: 100%;
+            max-width: 800px;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
-        .q-tag {
-            font-size: 10px;
-            background: #e2e8f0;
-            padding: 2px 8px;
-            border-radius: 10px;
-            color: #475569;
-            text-transform: uppercase;
+
+        .brand {
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .q-scenario {
-            padding: 15px 20px;
-            font-style: italic;
-            color: #334155;
+        .evaluator-badge {
+            font-size: 12px;
+            background: #eef2ff;
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* --- Main Container --- */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- Candidate Info Card --- */
+        .card {
+            background: var(--surface);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.2s;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        /* --- Role Selection Cards (New UI) --- */
+        .role-selector-label {
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .role-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .role-card {
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
             background: #fff;
-            border-bottom: 1px dashed var(--border);
-            line-height: 1.5;
+        }
+
+        .role-card:hover {
+            border-color: #c7d2fe;
+            background: #f5f7ff;
+        }
+
+        .role-card.active {
+            border-color: var(--primary);
+            background: #eef2ff;
+            color: var(--primary);
+        }
+
+        .role-card strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .role-card small {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* --- Questions --- */
+        .role-section {
+            display: none;
+            animation: slideUp 0.4s ease-out;
+        }
+        .role-section.active { display: block; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-badge {
+            background: var(--text-main);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .q-card {
+            background: var(--surface);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 25px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .q-header {
+            background: #f8fafc;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .q-title { font-weight: 700; font-size: 15px; color: var(--text-main); }
+        .q-tag { font-size: 11px; font-weight: 600; text-transform: uppercase; background: #e2e8f0; color: #475569; padding: 4px 8px; border-radius: 4px; }
+
+        .q-scenario {
+            padding: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #374151;
+            background: #fff;
         }
 
         .eval-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            font-size: 13px;
+            border-top: 1px solid var(--border);
         }
 
-        .pass-col { background-color: #f0fdf4; padding: 15px; border-right: 1px solid var(--border); }
-        .fail-col { background-color: #fef2f2; padding: 15px; }
+        .pass-box, .fail-box {
+            padding: 20px;
+        }
 
-        .text-success { color: #15803d; font-weight: bold; display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 11px; }
-        .text-danger { color: #b91c1c; font-weight: bold; display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 11px; }
-        
-        ul { margin: 0; padding-left: 15px; }
-        li { margin-bottom: 5px; }
+        .pass-box { background: var(--success-bg); border-right: 1px solid var(--border); }
+        .fail-box { background: var(--danger-bg); }
 
-        /* --- Scoring Buttons --- */
-        .scoring-area {
+        .eval-title {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .t-green { color: var(--success-text); }
+        .t-red { color: var(--danger-text); }
+
+        .eval-grid ul { margin: 0; padding-left: 18px; font-size: 13px; color: #4b5563; }
+        .eval-grid li { margin-bottom: 4px; }
+
+        /* --- Scoring UI --- */
+        .scoring-bar {
             padding: 15px 20px;
-            background: #fafafa;
+            background: #fff;
             border-top: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .score-btn-group {
-            display: flex;
-            gap: 10px;
-        }
+        .score-label { font-size: 13px; font-weight: 600; color: var(--text-muted); }
 
-        .score-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid #cbd5e1;
-            background: white;
+        .score-options { display: flex; gap: 8px; }
+
+        .score-chip {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            font-weight: bold;
-            color: #64748b;
-            transition: all 0.2s;
+            font-weight: 600;
             font-size: 14px;
-        }
-
-        .score-btn:hover { border-color: var(--accent); color: var(--accent); }
-        
-        .score-btn.selected {
-            background-color: var(--accent);
-            color: white;
-            border-color: var(--accent);
-            transform: scale(1.1);
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
-        }
-
-        /* --- Footer --- */
-        .submit-btn {
-            background-color: var(--danger);
-            color: white;
-            width: 100%;
-            padding: 18px;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
+            color: #6b7280;
             cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.3s;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .submit-btn:hover { background-color: #dc2626; }
-        .submit-btn:disabled { background-color: #94a3b8; cursor: not-allowed; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .score-chip:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+
+        .score-chip.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.4);
+            transform: scale(1.1);
+        }
+
+        /* --- Final Result Tiles --- */
+        .result-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .result-tile {
+            position: relative;
+        }
+
+        .result-tile input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .tile-content {
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.2s;
+            background: #fff;
+        }
+
+        /* Logic for tile selection visuals */
+        .result-tile input:checked + .tile-content {
+            border-color: var(--primary);
+            background: #eef2ff;
+            color: var(--primary);
+            font-weight: 700;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* --- Submit Button --- */
+        .submit-area {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+            transition: all 0.3s;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5);
+        }
+
+        .btn-submit:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        #msg { margin-top: 15px; font-weight: 500; font-size: 14px; min-height: 20px; }
+
+        @media (max-width: 600px) {
+            .form-grid, .role-cards, .eval-grid, .result-container { grid-template-columns: 1fr; }
+            .pass-box { border-right: none; border-bottom: 1px solid var(--border); }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <div>
-            <div class="brand-title">TopLabsBazaar.com</div>
-            <div style="font-size: 14px; color: #64748b;">Technical Interview Assessment</div>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="brand">
+                <span style="font-size: 24px;">🚀</span> TopLabsBazaar
+            </div>
+            <div class="evaluator-badge">
+                👤 HR: Neha Desai
+            </div>
         </div>
-        <div style="text-align: right; font-size: 13px;">
-            Evaluator: <strong>Neha Desai (HR)</strong>
-        </div>
-    </header>
+    </nav>
 
-    <!-- Candidate Form -->
-    <div style="background: #f1f5f9; padding: 25px; border-radius: 10px; margin-bottom: 30px; border: 1px solid #e2e8f0;">
-        <div class="input-group">
-            <label>Candidate Name</label>
-            <input type="text" id="cName" placeholder="Enter Full Name">
+    <div class="container">
+
+        <div class="card">
+            <div class="card-title">Candidate Details</div>
+            
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="cName" placeholder="e.g. Rahul Sharma">
+                </div>
+                <div class="input-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" id="cMobile" placeholder="e.g. 9812345678">
+                </div>
+            </div>
+
+            <div class="role-selector-label">Select Interview Role</div>
+            <div class="role-cards">
+                <div class="role-card" onclick="selectRole('node', this)">
+                    <strong>Node.js Backend</strong>
+                    <small>Scalability & System Design</small>
+                </div>
+                <div class="role-card" onclick="selectRole('react', this)">
+                    <strong>React Native</strong>
+                    <small>Mobile Architecture</small>
+                </div>
+                <div class="role-card" onclick="selectRole('ios', this)">
+                    <strong>iOS Native</strong>
+                    <small>Swift & Core Systems</small>
+                </div>
+            </div>
+            <input type="hidden" id="selectedRoleValue">
         </div>
-        <div class="input-group">
-            <label>Mobile Number</label>
-            <input type="tel" id="cMobile" placeholder="98XXXXXXXX">
+
+        <div id="node" class="role-section">
+            <div class="section-badge">Node.js Assessment</div>
+
+            <div class="q-card" id="node_q1">
+                <div class="q-header">
+                    <span class="q-title">Q1. Event Loop Blocking</span>
+                    <span class="q-tag">Core Internals</span>
+                </div>
+                <div class="q-scenario">"We have a CPU-intensive PDF generation task. When it runs, the entire server hangs. Why does this happen in Node.js and how do we fix it at an architectural level?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>Identifies Single Thread blocking</li>
+                            <li>Solution: Worker Threads</li>
+                            <li>Solution: Message Queue + Microservice</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"Use async/await" (Misconception)</li>
+                            <li>"Increase RAM" (Vertical scaling fail)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('node_q1', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('node_q1', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('node_q1', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('node_q1', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('node_q1', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" id="node_q2">
+                <div class="q-header">
+                    <span class="q-title">Q2. Distributed Transactions</span>
+                    <span class="q-tag">Reliability</span>
+                </div>
+                <div class="q-scenario">"A user was charged, but our database crashed before we could record the order. Now the money is gone, but no order exists. How do we prevent or auto-resolve this?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>Idempotency Keys</li>
+                            <li>Two-Phase Commit (2PC) / Saga</li>
+                            <li>Reconciliation Jobs (Cron)</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"Trust frontend to retry"</li>
+                            <li>"Manually refund users"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('node_q2', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('node_q2', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('node_q2', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('node_q2', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('node_q2', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" id="node_q3">
+                <div class="q-header">
+                    <span class="q-title">Q3. Memory (Streams)</span>
+                    <span class="q-tag">Performance</span>
+                </div>
+                <div class="q-scenario">"Process 10GB CSV file on 1GB RAM server. Reading it crashes the server (OOM). How do we process this?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>Node.js Streams (pipeline/pipe)</li>
+                            <li>Process chunk-by-chunk</li>
+                            <li>Backpressure handling</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"Increase server RAM"</li>
+                            <li>"fs.readFile()" (Loads all)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('node_q3', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('node_q3', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('node_q3', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('node_q3', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('node_q3', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" id="node_q4">
+                <div class="q-header">
+                    <span class="q-title">Q4. Concurrency & Locking</span>
+                    <span class="q-tag">Database</span>
+                </div>
+                <div class="q-scenario">"1 ticket left. Two users click 'Buy' at the exact same millisecond. How do we ensure no double booking?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>Pessimistic Locking (SELECT FOR UPDATE)</li>
+                            <li>Optimistic Locking (Version col)</li>
+                            <li>Redis Distributed Lock</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"Check `if (seats > 0)`" (Race condition)</li>
+                            <li>"Disable button on frontend"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('node_q4', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('node_q4', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('node_q4', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('node_q4', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('node_q4', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" id="node_q5">
+                <div class="q-header">
+                    <span class="q-title">Q5. Microservices Latency</span>
+                    <span class="q-tag">Architecture</span>
+                </div>
+                <div class="q-scenario">"Service A->B->C->D chain latency is stacking up to 2 seconds. How do we optimize this?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>Switch to gRPC (Protobufs)</li>
+                            <li>Async Events (Message Bus)</li>
+                            <li>Caching (Redis)</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"Combine back to monolith"</li>
+                            <li>"Use faster servers"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('node_q5', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('node_q5', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('node_q5', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('node_q5', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('node_q5', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="input-group">
-            <label>Select Role for Interview</label>
-            <select id="roleSelect" onchange="showSection()">
-                <option value="">-- Choose Role --</option>
-                <option value="node">Node.js Backend Architect</option>
-                <option value="react">React Native Architect</option>
-                <option value="ios">iOS Native Developer</option>
-            </select>
+
+        <div id="react" class="role-section">
+            <div class="section-badge">React Native Assessment</div>
+            
+            <div class="q-card" id="react_q1">
+                <div class="q-header">
+                    <span class="q-title">Q1. The Bridge & JSI</span>
+                    <span class="q-tag">Core Architecture</span>
+                </div>
+                <div class="q-scenario">"Integrate High-Frequency Trading SDK (100 updates/sec). The 'Bridge' is too slow. How do we solve this?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>JSI (JavaScript Interface)</li>
+                            <li>Native Modules (C++ Binding)</li>
+                            <li>Batch updates</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"Use AsyncStorage"</li>
+                            <li>"Standard Bridge"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('react_q1', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('react_q1', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('react_q1', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('react_q1', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('react_q1', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" id="react_q2">
+                <div class="q-header">
+                    <span class="q-title">Q2. List Performance</span>
+                    <span class="q-tag">Optimization</span>
+                </div>
+                <div class="q-scenario">"Complex feed (videos/layouts) has jerky scroll on Android. How to achieve 60 FPS?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>FlashList (Recycles views)</li>
+                            <li>Memoization (React.memo)</li>
+                            <li>UI Thread Animations (Reanimated)</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"Use ScrollView"</li>
+                            <li>"Reduce image quality"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('react_q2', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('react_q2', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('react_q2', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('react_q2', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('react_q2', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" id="react_q3">
+                <div class="q-header">
+                    <span class="q-title">Q3. Offline-First</span>
+                    <span class="q-tag">Data Sync</span>
+                </div>
+                <div class="q-scenario">"App used in basements (No Signal). How do you design data layer for scanning and syncing?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>WatermelonDB / Realm</li>
+                            <li>Sync Job Queue</li>
+                            <li>Optimistic UI</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"AsyncStorage"</li>
+                            <li>"Block user action"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('react_q3', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('react_q3', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('react_q3', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('react_q3', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('react_q3', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" id="react_q4">
+                <div class="q-header">
+                    <span class="q-title">Q4. Startup Time</span>
+                    <span class="q-tag">Performance</span>
+                </div>
+                <div class="q-scenario">"App takes 5s to open on Android. What technical steps will reduce this?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>Hermes Engine</li>
+                            <li>Inline Requires</li>
+                            <li>Reduce bundle size</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"Splash screen loader"</li>
+                            <li>"Switch to Native"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('react_q4', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('react_q4', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('react_q4', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('react_q4', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('react_q4', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" id="react_q5">
+                <div class="q-header">
+                    <span class="q-title">Q5. OTA Updates (CodePush)</span>
+                    <span class="q-tag">DevOps</span>
+                </div>
+                <div class="q-scenario">"CodePush update crashed app because it depended on a new unreleased Native Library. Prevention?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>Semantic Versioning (Target Binary)</li>
+                            <li>Staging Environment</li>
+                            <li>Rollback features</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"Stop using CodePush"</li>
+                            <li>"Reinstall app"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('react_q5', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('react_q5', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('react_q5', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('react_q5', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('react_q5', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <div id="ios" class="role-section">
+            <div class="section-badge">iOS Native Assessment</div>
+            
+            <div class="q-card" id="ios_q1">
+                <div class="q-header">
+                    <span class="q-title">Q1. Memory (ARC)</span>
+                    <span class="q-tag">Core Swift</span>
+                </div>
+                <div class="q-scenario">"Memory keeps climbing until crash. How to debug?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>Retain Cycles / Strong References</li>
+                            <li>Use `[weak self]`</li>
+                            <li>Instruments (Leaks)</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"Garbage Collector"</li>
+                            <li>"Clear cache manually"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('ios_q1', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('ios_q1', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('ios_q1', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('ios_q1', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('ios_q1', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" id="ios_q2">
+                <div class="q-header">
+                    <span class="q-title">Q2. Concurrency</span>
+                    <span class="q-tag">Multithreading</span>
+                </div>
+                <div class="q-scenario">"Data corruption when two threads update balance simultaneously. Fix?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>Actors (Swift 5.5+)</li>
+                            <li>Serial DispatchQueue</li>
+                            <li>Data Race hazards</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"Volatile variables"</li>
+                            <li>"NSLock" (Old school)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('ios_q2', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('ios_q2', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('ios_q2', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('ios_q2', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('ios_q2', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" id="ios_q3">
+                <div class="q-header">
+                    <span class="q-title">Q3. Architecture</span>
+                    <span class="q-tag">Scalability</span>
+                </div>
+                <div class="q-scenario">"MVC is becoming unmaintainable with 100+ screens. Proposal?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>MVVM-C (Coordinator)</li>
+                            <li>VIPER</li>
+                            <li>Testability</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"Stick to MVC"</li>
+                            <li>"Logic in View"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('ios_q3', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('ios_q3', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('ios_q3', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('ios_q3', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('ios_q3', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" id="ios_q4">
+                <div class="q-header">
+                    <span class="q-title">Q4. Security (Keychain)</span>
+                    <span class="q-tag">Security</span>
+                </div>
+                <div class="q-scenario">"Where to store Auth Tokens and Medical Keys securely?"</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>iOS Keychain</li>
+                            <li>Secure Enclave</li>
+                            <li>Biometric Access</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"UserDefaults"</li>
+                            <li>"Text file"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('ios_q4', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('ios_q4', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('ios_q4', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('ios_q4', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('ios_q4', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="q-card" id="ios_q5">
+                <div class="q-header">
+                    <span class="q-title">Q5. Background Tasks</span>
+                    <span class="q-tag">System Integration</span>
+                </div>
+                <div class="q-scenario">"Upload large medical files in background. Standard URLSession fails."</div>
+                <div class="eval-grid">
+                    <div class="pass-box">
+                        <span class="eval-title t-green">✅ Green Flags</span>
+                        <ul>
+                            <li>URLSessionConfiguration.background</li>
+                            <li>BGTaskScheduler</li>
+                        </ul>
+                    </div>
+                    <div class="fail-box">
+                        <span class="eval-title t-red">🚩 Red Flags</span>
+                        <ul>
+                            <li>"Silent Audio Hack"</li>
+                            <li>"Not possible"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scoring-bar">
+                    <span class="score-label">Score Candidate:</span>
+                    <div class="score-options">
+                        <div class="score-chip" onclick="rate('ios_q5', 1, this)">1</div>
+                        <div class="score-chip" onclick="rate('ios_q5', 2, this)">2</div>
+                        <div class="score-chip" onclick="rate('ios_q5', 3, this)">3</div>
+                        <div class="score-chip" onclick="rate('ios_q5', 4, this)">4</div>
+                        <div class="score-chip" onclick="rate('ios_q5', 5, this)">5</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Final Recommendation</div>
+            <div class="result-container">
+                <label class="result-tile">
+                    <input type="radio" name="result" value="Hire Principal">
+                    <div class="tile-content">
+                        <div style="font-size: 20px;">🏆</div>
+                        <div>Hire Principal</div>
+                    </div>
+                </label>
+                <label class="result-tile">
+                    <input type="radio" name="result" value="Hire Senior">
+                    <div class="tile-content">
+                        <div style="font-size: 20px;">🌟</div>
+                        <div>Hire Senior</div>
+                    </div>
+                </label>
+                <label class="result-tile">
+                    <input type="radio" name="result" value="Reject">
+                    <div class="tile-content">
+                        <div style="font-size: 20px;">❌</div>
+                        <div>Reject</div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="submit-area">
+                <button class="btn-submit" onclick="submitData()">Submit Evaluation</button>
+                <p id="msg"></p>
+            </div>
+        </div>
+
     </div>
 
-    <!-- NODE JS SECTION -->
-    <div id="node" class="role-section">
-        <div class="section-header">Node.js Assessment</div>
+    <script>
+        // --- PASTE YOUR GOOGLE SCRIPT URL HERE ---
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdSaZXOT_Dly-N8771n9zCh1Tcsv7DpLHZ5I7bUVO5E8RRU5eP_gWW-f5OCu3BL7rqhA/exec";
 
-        <!-- Q1 -->
-        <div class="question-card" id="node_q1">
-            <div class="q-header">
-                <span>Q1. Event Loop Blocking</span>
-                <span class="q-tag">Core Internals</span>
-            </div>
-            <div class="q-scenario">"We have a CPU-intensive PDF generation task. When it runs, the entire server hangs. Why does this happen in Node.js and how do we fix it at an architectural level?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Identifies Single Thread blocking.</li>
-                        <li>Solution: Worker Threads.</li>
-                        <li>Solution: Message Queue + Microservice.</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Use async/await."</li>
-                        <li>"Increase RAM."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('node_q1', 1)">1</div>
-                    <div class="score-btn" onclick="rate('node_q1', 2)">2</div>
-                    <div class="score-btn" onclick="rate('node_q1', 3)">3</div>
-                    <div class="score-btn" onclick="rate('node_q1', 4)">4</div>
-                    <div class="score-btn" onclick="rate('node_q1', 5)">5</div>
-                </div>
-            </div>
-        </div>
+        let scores = {};
 
-        <!-- Q2 -->
-        <div class="question-card" id="node_q2">
-            <div class="q-header">
-                <span>Q2. Distributed Transactions</span>
-                <span class="q-tag">Reliability</span>
-            </div>
-            <div class="q-scenario">"A user was charged, but our database crashed before we could record the order. Now the money is gone, but no order exists. How do we prevent or auto-resolve this?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Idempotency Keys.</li>
-                        <li>Two-Phase Commit (2PC) / Saga.</li>
-                        <li>Reconciliation Jobs (Cron).</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Trust frontend to retry."</li>
-                        <li>"Manually refund users."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('node_q2', 1)">1</div>
-                    <div class="score-btn" onclick="rate('node_q2', 2)">2</div>
-                    <div class="score-btn" onclick="rate('node_q2', 3)">3</div>
-                    <div class="score-btn" onclick="rate('node_q2', 4)">4</div>
-                    <div class="score-btn" onclick="rate('node_q2', 5)">5</div>
-                </div>
-            </div>
-        </div>
+        function selectRole(roleId, cardElement) {
+            // Update UI for cards
+            document.querySelectorAll('.role-card').forEach(c => c.classList.remove('active'));
+            cardElement.classList.add('active');
 
-        <!-- Q3 -->
-        <div class="question-card" id="node_q3">
-            <div class="q-header">
-                <span>Q3. Memory (Streams)</span>
-                <span class="q-tag">Performance</span>
-            </div>
-            <div class="q-scenario">"Process 10GB CSV file on 1GB RAM server. Reading it crashes the server (OOM). How do we process this?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Node.js Streams (pipeline/pipe).</li>
-                        <li>Process chunk-by-chunk.</li>
-                        <li>Backpressure handling.</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Increase server RAM."</li>
-                        <li>"fs.readFile()" (Loads all).</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('node_q3', 1)">1</div>
-                    <div class="score-btn" onclick="rate('node_q3', 2)">2</div>
-                    <div class="score-btn" onclick="rate('node_q3', 3)">3</div>
-                    <div class="score-btn" onclick="rate('node_q3', 4)">4</div>
-                    <div class="score-btn" onclick="rate('node_q3', 5)">5</div>
-                </div>
-            </div>
-        </div>
+            // Set internal value
+            document.getElementById('selectedRoleValue').value = roleId;
 
-        <!-- Q4 -->
-        <div class="question-card" id="node_q4">
-            <div class="q-header">
-                <span>Q4. Concurrency & Locking</span>
-                <span class="q-tag">Database</span>
-            </div>
-            <div class="q-scenario">"1 ticket left. Two users click 'Buy' at the exact same millisecond. How do we ensure no double booking?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Pessimistic Locking (SELECT FOR UPDATE).</li>
-                        <li>Optimistic Locking (Version col).</li>
-                        <li>Redis Distributed Lock.</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Check `if (seats > 0)`."</li>
-                        <li>"Disable button on frontend."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('node_q4', 1)">1</div>
-                    <div class="score-btn" onclick="rate('node_q4', 2)">2</div>
-                    <div class="score-btn" onclick="rate('node_q4', 3)">3</div>
-                    <div class="score-btn" onclick="rate('node_q4', 4)">4</div>
-                    <div class="score-btn" onclick="rate('node_q4', 5)">5</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Q5 -->
-        <div class="question-card" id="node_q5">
-            <div class="q-header">
-                <span>Q5. Microservices Latency</span>
-                <span class="q-tag">Architecture</span>
-            </div>
-            <div class="q-scenario">"Service A->B->C->D chain latency is stacking up to 2 seconds. How do we optimize this?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Switch to gRPC (Protobufs).</li>
-                        <li>Async Events (Message Bus).</li>
-                        <li>Caching (Redis).</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Combine back to monolith."</li>
-                        <li>"Use faster servers."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('node_q5', 1)">1</div>
-                    <div class="score-btn" onclick="rate('node_q5', 2)">2</div>
-                    <div class="score-btn" onclick="rate('node_q5', 3)">3</div>
-                    <div class="score-btn" onclick="rate('node_q5', 4)">4</div>
-                    <div class="score-btn" onclick="rate('node_q5', 5)">5</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- REACT NATIVE SECTION -->
-    <div id="react" class="role-section">
-        <div class="section-header">React Native Assessment</div>
-        
-        <!-- RN Q1 -->
-        <div class="question-card" id="react_q1">
-            <div class="q-header">
-                <span>Q1. The Bridge & JSI</span>
-                <span class="q-tag">Core Architecture</span>
-            </div>
-            <div class="q-scenario">"Integrate High-Frequency Trading SDK (100 updates/sec). The 'Bridge' is too slow. How do we solve this?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>JSI (JavaScript Interface).</li>
-                        <li>Native Modules (C++ Binding).</li>
-                        <li>Batch updates.</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Use AsyncStorage."</li>
-                        <li>"Standard Bridge."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('react_q1', 1)">1</div>
-                    <div class="score-btn" onclick="rate('react_q1', 2)">2</div>
-                    <div class="score-btn" onclick="rate('react_q1', 3)">3</div>
-                    <div class="score-btn" onclick="rate('react_q1', 4)">4</div>
-                    <div class="score-btn" onclick="rate('react_q1', 5)">5</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- RN Q2 -->
-        <div class="question-card" id="react_q2">
-            <div class="q-header">
-                <span>Q2. List Performance</span>
-                <span class="q-tag">Optimization</span>
-            </div>
-            <div class="q-scenario">"Complex feed (videos/layouts) has jerky scroll on Android. How to achieve 60 FPS?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>FlashList (Recycles views).</li>
-                        <li>Memoization (React.memo).</li>
-                        <li>UI Thread Animations (Reanimated).</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Use ScrollView."</li>
-                        <li>"Reduce image quality."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('react_q2', 1)">1</div>
-                    <div class="score-btn" onclick="rate('react_q2', 2)">2</div>
-                    <div class="score-btn" onclick="rate('react_q2', 3)">3</div>
-                    <div class="score-btn" onclick="rate('react_q2', 4)">4</div>
-                    <div class="score-btn" onclick="rate('react_q2', 5)">5</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- RN Q3 -->
-        <div class="question-card" id="react_q3">
-            <div class="q-header">
-                <span>Q3. Offline-First</span>
-                <span class="q-tag">Data Sync</span>
-            </div>
-            <div class="q-scenario">"App used in basements (No Signal). How do you design data layer for scanning and syncing?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>WatermelonDB / Realm.</li>
-                        <li>Sync Job Queue.</li>
-                        <li>Optimistic UI.</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"AsyncStorage."</li>
-                        <li>"Block user action."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('react_q3', 1)">1</div>
-                    <div class="score-btn" onclick="rate('react_q3', 2)">2</div>
-                    <div class="score-btn" onclick="rate('react_q3', 3)">3</div>
-                    <div class="score-btn" onclick="rate('react_q3', 4)">4</div>
-                    <div class="score-btn" onclick="rate('react_q3', 5)">5</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- RN Q4 -->
-        <div class="question-card" id="react_q4">
-            <div class="q-header">
-                <span>Q4. Startup Time</span>
-                <span class="q-tag">Performance</span>
-            </div>
-            <div class="q-scenario">"App takes 5s to open on Android. What technical steps will reduce this?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Hermes Engine.</li>
-                        <li>Inline Requires.</li>
-                        <li>Reduce bundle size.</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Splash screen loader."</li>
-                        <li>"Switch to Native."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('react_q4', 1)">1</div>
-                    <div class="score-btn" onclick="rate('react_q4', 2)">2</div>
-                    <div class="score-btn" onclick="rate('react_q4', 3)">3</div>
-                    <div class="score-btn" onclick="rate('react_q4', 4)">4</div>
-                    <div class="score-btn" onclick="rate('react_q4', 5)">5</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- RN Q5 -->
-        <div class="question-card" id="react_q5">
-            <div class="q-header">
-                <span>Q5. OTA Updates (CodePush)</span>
-                <span class="q-tag">DevOps</span>
-            </div>
-            <div class="q-scenario">"CodePush update crashed app because it depended on a new unreleased Native Library. Prevention?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Semantic Versioning (Target Binary).</li>
-                        <li>Staging Environment.</li>
-                        <li>Rollback features.</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Stop using CodePush."</li>
-                        <li>"Reinstall app."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('react_q5', 1)">1</div>
-                    <div class="score-btn" onclick="rate('react_q5', 2)">2</div>
-                    <div class="score-btn" onclick="rate('react_q5', 3)">3</div>
-                    <div class="score-btn" onclick="rate('react_q5', 4)">4</div>
-                    <div class="score-btn" onclick="rate('react_q5', 5)">5</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- IOS SECTION -->
-    <div id="ios" class="role-section">
-        <div class="section-header">iOS Native Assessment</div>
-        
-        <!-- iOS Q1 -->
-        <div class="question-card" id="ios_q1">
-            <div class="q-header">
-                <span>Q1. Memory (ARC)</span>
-                <span class="q-tag">Core Swift</span>
-            </div>
-            <div class="q-scenario">"Memory keeps climbing until crash. How to debug?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Retain Cycles / Strong References.</li>
-                        <li>Use `[weak self]`.</li>
-                        <li>Instruments (Leaks).</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Garbage Collector."</li>
-                        <li>"Clear cache manually."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('ios_q1', 1)">1</div>
-                    <div class="score-btn" onclick="rate('ios_q1', 2)">2</div>
-                    <div class="score-btn" onclick="rate('ios_q1', 3)">3</div>
-                    <div class="score-btn" onclick="rate('ios_q1', 4)">4</div>
-                    <div class="score-btn" onclick="rate('ios_q1', 5)">5</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- iOS Q2 -->
-        <div class="question-card" id="ios_q2">
-            <div class="q-header">
-                <span>Q2. Concurrency</span>
-                <span class="q-tag">Multithreading</span>
-            </div>
-            <div class="q-scenario">"Data corruption when two threads update balance simultaneously. Fix?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Actors (Swift 5.5+).</li>
-                        <li>Serial DispatchQueue.</li>
-                        <li>Data Race hazards.</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Volatile variables."</li>
-                        <li>"NSLock" (Old school).</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('ios_q2', 1)">1</div>
-                    <div class="score-btn" onclick="rate('ios_q2', 2)">2</div>
-                    <div class="score-btn" onclick="rate('ios_q2', 3)">3</div>
-                    <div class="score-btn" onclick="rate('ios_q2', 4)">4</div>
-                    <div class="score-btn" onclick="rate('ios_q2', 5)">5</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- iOS Q3 -->
-        <div class="question-card" id="ios_q3">
-            <div class="q-header">
-                <span>Q3. Architecture</span>
-                <span class="q-tag">Scalability</span>
-            </div>
-            <div class="q-scenario">"MVC is becoming unmaintainable with 100+ screens. Proposal?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>MVVM-C (Coordinator).</li>
-                        <li>VIPER.</li>
-                        <li>Testability.</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Stick to MVC."</li>
-                        <li>"Logic in View."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('ios_q3', 1)">1</div>
-                    <div class="score-btn" onclick="rate('ios_q3', 2)">2</div>
-                    <div class="score-btn" onclick="rate('ios_q3', 3)">3</div>
-                    <div class="score-btn" onclick="rate('ios_q3', 4)">4</div>
-                    <div class="score-btn" onclick="rate('ios_q3', 5)">5</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- iOS Q4 -->
-        <div class="question-card" id="ios_q4">
-            <div class="q-header">
-                <span>Q4. Security (Keychain)</span>
-                <span class="q-tag">Security</span>
-            </div>
-            <div class="q-scenario">"Where to store Auth Tokens and Medical Keys securely?"</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>iOS Keychain.</li>
-                        <li>Secure Enclave.</li>
-                        <li>Biometric Access.</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"UserDefaults."</li>
-                        <li>"Text file."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('ios_q4', 1)">1</div>
-                    <div class="score-btn" onclick="rate('ios_q4', 2)">2</div>
-                    <div class="score-btn" onclick="rate('ios_q4', 3)">3</div>
-                    <div class="score-btn" onclick="rate('ios_q4', 4)">4</div>
-                    <div class="score-btn" onclick="rate('ios_q4', 5)">5</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- iOS Q5 -->
-        <div class="question-card" id="ios_q5">
-            <div class="q-header">
-                <span>Q5. Background Tasks</span>
-                <span class="q-tag">System Integration</span>
-            </div>
-            <div class="q-scenario">"Upload large medical files in background. Standard URLSession fails."</div>
-            <div class="eval-grid">
-                <div class="pass-col">
-                    <span class="text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>URLSessionConfiguration.background.</li>
-                        <li>BGTaskScheduler.</li>
-                    </ul>
-                </div>
-                <div class="fail-col">
-                    <span class="text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Silent Audio Hack."</li>
-                        <li>"Not possible."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="scoring-area">
-                <span style="font-weight: bold; color: #64748b;">Rating:</span>
-                <div class="score-btn-group">
-                    <div class="score-btn" onclick="rate('ios_q5', 1)">1</div>
-                    <div class="score-btn" onclick="rate('ios_q5', 2)">2</div>
-                    <div class="score-btn" onclick="rate('ios_q5', 3)">3</div>
-                    <div class="score-btn" onclick="rate('ios_q5', 4)">4</div>
-                    <div class="score-btn" onclick="rate('ios_q5', 5)">5</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Final Submit -->
-    <div style="margin-top: 40px; text-align: center; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
-        <h3 style="margin-top: 0; color: #334155;">Final Recommendation</h3>
-        <div style="margin-bottom: 20px; display: flex; justify-content: center; gap: 20px;">
-            <label style="cursor: pointer; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                <input type="radio" name="result" value="Hire Principal"> <strong>Hire (Principal)</strong>
-            </label>
-            <label style="cursor: pointer; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                <input type="radio" name="result" value="Hire Senior"> <strong>Hire (Senior)</strong>
-            </label>
-            <label style="cursor: pointer; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                <input type="radio" name="result" value="Reject"> <strong>Reject</strong>
-            </label>
-        </div>
-        <button class="submit-btn" onclick="submitData()">Submit Evaluation to Google Sheet</button>
-        <p id="msg" style="margin-top: 15px; font-weight: bold; font-size: 14px; min-height: 20px;"></p>
-    </div>
-
-</div>
-
-<script>
-    // --- IMPORTANT: Paste your Google Script URL here ---
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdSaZXOT_Dly-N8771n9zCh1Tcsv7DpLHZ5I7bUVO5E8RRU5eP_gWW-f5OCu3BL7rqhA/exec";
-
-    // Store Scores
-    let scores = {};
-
-    function showSection() {
-        document.querySelectorAll('.role-section').forEach(el => el.classList.remove('active'));
-        const role = document.getElementById('roleSelect').value;
-        if(role) document.getElementById(role).classList.add('active');
-    }
-
-    function rate(qId, score) {
-        scores[qId] = score;
-        // Visual Update
-        const parent = document.getElementById(qId);
-        parent.querySelectorAll('.score-btn').forEach(btn => btn.classList.remove('selected'));
-        // Select clicked one
-        // We need to find the specific button clicked. 
-        // Since event.target might be the number inside, we look for the closest .score-btn
-        const btn = event.target.closest('.score-btn');
-        if (btn) btn.classList.add('selected');
-    }
-
-    function submitData() {
-        const name = document.getElementById('cName').value;
-        const mobile = document.getElementById('cMobile').value;
-        const role = document.getElementById('roleSelect').value;
-        const result = document.querySelector('input[name="result"]:checked')?.value;
-        const btn = document.querySelector('.submit-btn');
-        const msg = document.getElementById('msg');
-
-        if(!name || !mobile || !role || !result) {
-            alert("Please fill Name, Mobile, Role and Final Result.");
-            return;
+            // Show Section
+            document.querySelectorAll('.role-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(roleId).classList.add('active');
         }
 
-        if(GOOGLE_SCRIPT_URL.includes("REPLACE_THIS")) {
-            alert("Error: Google Script URL not set in code! Please edit the HTML file.");
-            return;
+        function rate(qId, score, btnElement) {
+            scores[qId] = score;
+            
+            // Visual Update - find siblings
+            const parent = btnElement.parentElement;
+            parent.querySelectorAll('.score-chip').forEach(btn => btn.classList.remove('selected'));
+            btnElement.classList.add('selected');
         }
 
-        btn.disabled = true;
-        btn.innerText = "Submitting...";
-        msg.innerText = "";
+        function submitData() {
+            const name = document.getElementById('cName').value;
+            const mobile = document.getElementById('cMobile').value;
+            const role = document.getElementById('selectedRoleValue').value;
+            const result = document.querySelector('input[name="result"]:checked')?.value;
+            const btn = document.querySelector('.btn-submit');
+            const msg = document.getElementById('msg');
 
-        // Collect scores for the selected role
-        let roleScores = [];
-        for(let i=1; i<=5; i++) {
-            roleScores.push(scores[`${role}_q${i}`] || 0);
+            if(!name || !mobile || !role || !result) {
+                alert("Please fill Name, Mobile, Select a Role, and choose Final Result.");
+                return;
+            }
+
+            if(GOOGLE_SCRIPT_URL.includes("REPLACE_THIS")) {
+                alert("Error: Google Script URL is missing in the code.");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "Submitting...";
+            msg.innerText = "";
+
+            // Collect scores
+            let roleScores = [];
+            for(let i=1; i<=5; i++) {
+                roleScores.push(scores[`${role}_q${i}`] || 0);
+            }
+
+            const payload = {
+                name: name,
+                mobile: mobile,
+                role: role,
+                scores: roleScores,
+                finalResult: result
+            };
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                msg.innerText = "✅ Successfully Saved!";
+                msg.style.color = "#059669";
+                btn.innerText = "Done";
+                setTimeout(() => {
+                     btn.disabled = false;
+                     btn.innerText = "Submit Evaluation";
+                }, 3000);
+            }).catch(err => {
+                msg.innerText = "❌ Error Saving.";
+                msg.style.color = "#dc2626";
+                btn.disabled = false;
+                btn.innerText = "Submit Evaluation";
+                console.error(err);
+            });
         }
-
-        const payload = {
-            name: name,
-            mobile: mobile,
-            role: role,
-            scores: roleScores,
-            finalResult: result
-        };
-
-        fetch(GOOGLE_SCRIPT_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        }).then(() => {
-            msg.innerText = "✅ Saved to Google Sheet Successfully!";
-            msg.style.color = "green";
-            btn.innerText = "Submitted";
-            setTimeout(() => {
-                 btn.disabled = false;
-                 btn.innerText = "Submit Evaluation to Google Sheet";
-            }, 3000);
-        }).catch(err => {
-            msg.innerText = "❌ Error Saving Data. Check Console.";
-            msg.style.color = "red";
-            btn.disabled = false;
-            btn.innerText = "Submit Evaluation to Google Sheet";
-            console.error(err);
-        });
-    }
-</script>
-
+    </script>
 </body>
 </html>
