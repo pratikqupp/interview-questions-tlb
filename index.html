@@ -3,39 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Principal Architect Assessment - TopLabsBazaar</title>
+    <title>TopLabsBazaar - Interview Portal</title>
     <style>
         :root {
             --primary: #0f172a;
             --accent: #2563eb;
             --danger: #ef4444;
             --success: #22c55e;
-            --bg-gray: #f8fafc;
+            --bg-gray: #f1f5f9;
             --border: #e2e8f0;
         }
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background-color: #555;
+            background-color: #e2e8f0;
             margin: 0;
             padding: 20px;
-            display: flex;
-            justify-content: center;
+            color: var(--primary);
         }
 
-        .page {
-            background-color: white;
-            width: 210mm;
-            min-height: 297mm;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
             padding: 40px;
-            box-sizing: border-box;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            position: relative;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
-        /* Headers */
+        /* --- Header & Form --- */
         header {
-            border-bottom: 3px solid var(--primary);
+            border-bottom: 3px solid var(--danger);
             padding-bottom: 20px;
             margin-bottom: 30px;
             display: flex;
@@ -43,583 +41,582 @@
             align-items: flex-end;
         }
 
-        .section-header {
-            page-break-before: always;
-            margin-top: 20px;
-            margin-bottom: 30px;
-            border-left: 5px solid var(--danger);
-            padding-left: 15px;
-        }
-
-        .section-title {
-            font-size: 22px;
+        .brand-title {
+            color: var(--danger);
+            font-size: 24px;
             font-weight: 800;
-            color: var(--primary);
             text-transform: uppercase;
-            margin: 0;
         }
 
-        .section-subtitle {
-            font-size: 14px;
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
             color: #64748b;
-            margin-top: 5px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
         }
 
-        .brand h1 { margin: 0; color: var(--danger); font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
-        .brand span { font-size: 12px; color: #64748b; font-weight: 600; }
-        .meta { text-align: right; font-size: 13px; color: #334155; }
-        .badge { background-color: var(--primary); color: white; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
 
-        /* Questions */
+        /* --- Sections --- */
+        .role-section {
+            display: none; /* Hidden by default */
+        }
+        .role-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .section-header {
+            background: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        /* --- Question Cards --- */
         .question-card {
             border: 1px solid var(--border);
             border-radius: 8px;
             margin-bottom: 25px;
-            break-inside: avoid;
             background: white;
+            overflow: hidden;
         }
 
         .q-header {
             background: var(--bg-gray);
             padding: 10px 15px;
             border-bottom: 1px solid var(--border);
+            font-weight: bold;
             display: flex;
             justify-content: space-between;
-            align-items: center;
         }
-
-        .q-title { font-weight: 700; color: var(--primary); font-size: 14px; }
-        .q-tag { font-size: 10px; border: 1px solid #cbd5e1; padding: 2px 8px; border-radius: 4px; color: #64748b; text-transform: uppercase; }
 
         .q-scenario {
             padding: 15px;
-            font-size: 13px;
-            color: #334155;
             font-style: italic;
-            background-color: #fff;
+            color: #334155;
+            background: #fff;
             border-bottom: 1px dashed var(--border);
-            line-height: 1.4;
         }
 
-        .eval-grid { display: grid; grid-template-columns: 1fr 1fr; }
-        .eval-col { padding: 12px 15px; font-size: 12px; }
-        .pass-col { border-right: 1px solid var(--border); background-color: #f0fdf4; }
-        .fail-col { background-color: #fef2f2; }
+        .eval-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            font-size: 13px;
+        }
+
+        .pass-col { background-color: #f0fdf4; padding: 10px; border-right: 1px solid var(--border); }
+        .fail-col { background-color: #fef2f2; padding: 10px; }
+
+        .text-success { color: #15803d; font-weight: bold; display: block; margin-bottom: 5px; }
+        .text-danger { color: #b91c1c; font-weight: bold; display: block; margin-bottom: 5px; }
         
-        .col-header { font-weight: 800; text-transform: uppercase; font-size: 10px; margin-bottom: 8px; display: block; }
-        .text-success { color: #15803d; }
-        .text-danger { color: #b91c1c; }
-
         ul { margin: 0; padding-left: 15px; }
-        li { margin-bottom: 3px; color: #475569; }
+        li { margin-bottom: 3px; }
 
-        /* Scoring */
-        .score-row { padding: 8px 15px; background: #fafafa; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
-        .score-label { font-size: 10px; font-weight: bold; color: #64748b; }
-        .star-circle { width: 18px; height: 18px; border: 1px solid #cbd5e1; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #94a3b8; }
-
-        /* Footer */
-        .footer { margin-top: 40px; border-top: 2px solid var(--primary); padding-top: 20px; display: flex; justify-content: space-between; page-break-inside: avoid; }
-        .signature-line { width: 200px; border-bottom: 1px solid #000; margin-bottom: 5px; height: 40px; }
-
-        .fab { position: fixed; bottom: 30px; right: 30px; background-color: var(--primary); color: white; border: none; padding: 15px 25px; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; font-weight: bold; font-size: 16px; display: flex; align-items: center; gap: 10px; z-index: 100; }
-
-        @media print {
-            body { background: none; margin: 0; padding: 0; display: block; }
-            .page { box-shadow: none; width: 100%; margin: 0; padding: 20px; min-height: auto; }
-            .fab { display: none; }
-            .question-card { break-inside: avoid; border: 1px solid #ccc; }
-            .pass-col { background-color: #f0fdf4 !important; -webkit-print-color-adjust: exact; }
-            .fail-col { background-color: #fef2f2 !important; -webkit-print-color-adjust: exact; }
-            .q-header { background-color: #f1f5f9 !important; -webkit-print-color-adjust: exact; }
+        /* --- Scoring Buttons --- */
+        .scoring-area {
+            padding: 10px 15px;
+            background: #fafafa;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
+
+        .score-btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .score-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 1px solid #cbd5e1;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            color: #64748b;
+            transition: all 0.2s;
+        }
+
+        .score-btn:hover { border-color: var(--accent); color: var(--accent); }
+        
+        .score-btn.selected {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* --- Footer --- */
+        .submit-btn {
+            background-color: var(--danger);
+            color: white;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .submit-btn:disabled { background-color: #ccc; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        /* Hide Print Button on Screen */
+        @media screen { .fab { display: none; } }
     </style>
 </head>
 <body>
 
-    <button class="fab" onclick="window.print()">
-        <span>🖨️</span> Print Assessment
-    </button>
-
-    <div class="page">
-        <header>
-            <div class="brand">
-                <h1>TopLabsBazaar.com</h1>
-                <span>Technical Interview Assessment</span>
-            </div>
-            <div class="meta">
-                <span class="badge">Level 5: Principal Architect</span><br><br>
-                <strong>Evaluator:</strong> Neha Desai (HR)<br>
-                <strong>Date:</strong> _________________
-            </div>
-        </header>
-
-        <!-- SECTION 1: NODE.JS -->
-        <div style="margin-bottom: 20px; border-left: 5px solid #ef4444; padding-left: 15px;">
-            <h2 class="section-title">Part 1: Node.js Backend</h2>
-            <div class="section-subtitle">Scalability, Concurrency & Distributed Systems</div>
+<div class="container">
+    <header>
+        <div>
+            <div class="brand-title">TopLabsBazaar.com</div>
+            <small>Evaluator: <strong>Neha Desai (HR)</strong></small>
         </div>
+    </header>
 
-        <!-- Node Q1 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q1. Event Loop Blocking (CPU Tasks)</span>
-                <span class="q-tag">Core Internals</span>
-            </div>
-            <div class="q-scenario">
-                "We have a CPU-intensive PDF generation task. When it runs, the entire server hangs and can't accept login requests. Why does this happen in Node.js and how do we fix it at an architectural level?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Identifies Single Thread blocking.</li>
-                        <li>Solution: <strong>Worker Threads</strong> or Child Processes.</li>
-                        <li>Solution: Offload to <strong>Message Queue</strong> + Microservice.</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Use async/await." (Does not fix CPU blocking).</li>
-                        <li>"Increase RAM." (Vertical scaling fails).</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
+    <!-- Candidate Form -->
+    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e2e8f0;">
+        <div class="input-group">
+            <label>Candidate Name</label>
+            <input type="text" id="cName" placeholder="Enter Full Name">
         </div>
-
-        <!-- Node Q2 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q2. Distributed Transactions (Payments)</span>
-                <span class="q-tag">Reliability</span>
-            </div>
-            <div class="q-scenario">
-                "A user was charged, but our database crashed before we could record the order. Now the money is gone, but no order exists. How do we design a system to prevent or auto-resolve this?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li><strong>Idempotency Keys</strong> for payment retries.</li>
-                        <li><strong>Two-Phase Commit (2PC)</strong> or Saga Pattern.</li>
-                        <li><strong>Reconciliation Jobs</strong> (Cron) to match Bank vs DB.</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Trust the frontend to retry."</li>
-                        <li>"Manually refund users."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
+        <div class="input-group">
+            <label>Mobile Number</label>
+            <input type="tel" id="cMobile" placeholder="98XXXXXXXX">
         </div>
-
-        <!-- Node Q3 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q3. Memory Management (Streams)</span>
-                <span class="q-tag">Performance</span>
-            </div>
-            <div class="q-scenario">
-                "We need to process a 10GB CSV file uploaded by a partner. Our container only has 1GB RAM. If we read the file, the server crashes (OOM). How do we process this?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Use <strong>Node.js Streams</strong> (pipeline/pipe).</li>
-                        <li>Process data chunk-by-chunk, not all at once.</li>
-                        <li>Backpressure handling.</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Increase server RAM to 16GB."</li>
-                        <li>"fs.readFile()" (Loads all into buffer).</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
+        <div class="input-group">
+            <label>Select Role for Interview</label>
+            <select id="roleSelect" onchange="showSection()">
+                <option value="">-- Choose Role --</option>
+                <option value="node">Node.js Backend Architect</option>
+                <option value="react">React Native Architect</option>
+                <option value="ios">iOS Native Developer</option>
+            </select>
         </div>
-
-        <!-- Node Q4 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q4. Concurrency & Locking</span>
-                <span class="q-tag">Database</span>
-            </div>
-            <div class="q-scenario">
-                "We have 1 ticket left. Two users click 'Buy' at the exact same millisecond. How do we ensure only one gets it and we don't have a double booking?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li><strong>Pessimistic Locking</strong> (SELECT ... FOR UPDATE).</li>
-                        <li><strong>Optimistic Locking</strong> (Version column).</li>
-                        <li>Redis Distributed Lock (Redlock).</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Check `if (seats > 0)` in code." (Race condition).</li>
-                        <li>"Disable the button on frontend."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
-        </div>
-
-        <!-- Node Q5 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q5. Microservices Communication</span>
-                <span class="q-tag">Architecture</span>
-            </div>
-            <div class="q-scenario">
-                "We have 20 microservices. Service A calls B, B calls C, C calls D. The latency is stacking up to 2 seconds. How do we optimize this communication?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Switch to <strong>gRPC</strong> (Protobufs) for internal calls.</li>
-                        <li>Use <strong>Asynchronous Events</strong> (Message Bus) where instant response isn't needed.</li>
-                        <li>Caching (Redis) at service boundaries.</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Combine them back into a monolith immediately."</li>
-                        <li>"Just use faster servers."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
-        </div>
-
-        <!-- SECTION 2: REACT NATIVE -->
-        <div class="section-header">
-            <h2 class="section-title">Part 2: React Native Architect</h2>
-            <div class="section-subtitle">Bridge, Performance & Native Modules</div>
-        </div>
-
-        <!-- RN Q1 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q1. The Bridge & JSI</span>
-                <span class="q-tag">Core Architecture</span>
-            </div>
-            <div class="q-scenario">
-                "We need to integrate a High-Frequency Trading SDK (Java/Swift) that sends 100 updates/sec. Passing this over the React Native 'Bridge' is too slow. How do we solve this?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Use <strong>JSI (JavaScript Interface)</strong> for direct C++ binding.</li>
-                        <li>Create a <strong>Native Module</strong>.</li>
-                        <li>Batch updates before sending to JS.</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Use AsyncStorage."</li>
-                        <li>"Just use the standard bridge." (Serialization cost).</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
-        </div>
-
-        <!-- RN Q2 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q2. List Performance (Virtualization)</span>
-                <span class="q-tag">Optimization</span>
-            </div>
-            <div class="q-scenario">
-                "We have a feed like Instagram with auto-playing videos and complex layouts. The scroll is jerky on mid-range Android phones. How do you achieve 60 FPS?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Use <strong>FlashList</strong> (Recycles views) instead of FlatList.</li>
-                        <li><strong>Memoization</strong> (React.memo, useCallback) for list items.</li>
-                        <li>Move animations to UI Thread (Reanimated).</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Use ScrollView." (Renders all items).</li>
-                        <li>"Reduce image quality." (Band-aid fix).</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
-        </div>
-
-        <!-- RN Q3 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q3. Offline-First Architecture</span>
-                <span class="q-tag">Data Sync</span>
-            </div>
-            <div class="q-scenario">
-                "Our logistics app is used in basements with no signal. Users must be able to scan packages and sync later. How do you design the data layer?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li><strong>Local DB:</strong> WatermelonDB (Reactive) or Realm.</li>
-                        <li><strong>Sync Queue:</strong> 'Job Queue' pattern that retries on connectivity.</li>
-                        <li><strong>Optimistic UI:</strong> Show success immediately.</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Use AsyncStorage." (Unreliable for complex relational data).</li>
-                        <li>"Block user action until internet returns."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
-        </div>
-
-        <!-- RN Q4 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q4. App Startup Time</span>
-                <span class="q-tag">Performance</span>
-            </div>
-            <div class="q-scenario">
-                "Our app takes 5 seconds to open on Android. This is affecting conversion. What specific technical steps will you take to reduce this?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Enable <strong>Hermes Engine</strong> (Bytecode precompilation).</li>
-                        <li><strong>Inline Requires</strong> (Lazy load modules).</li>
-                        <li>Reduce bundle size (Remove unused libraries).</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Add a splash screen loader." (UX fix, not technical).</li>
-                        <li>"Switch to Native." (Giving up on RN).</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
-        </div>
-
-        <!-- RN Q5 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q5. OTA Updates (CodePush)</span>
-                <span class="q-tag">DevOps</span>
-            </div>
-            <div class="q-scenario">
-                "We use CodePush for hotfixes. A developer pushed a JS update that depends on a new Native Library that wasn't released to the App Store yet. The app is now crashing on launch. How do we prevent this?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Strict <strong>Semantic Versioning</strong> (Target Binary Version).</li>
-                        <li><strong>Staging Environment</strong> testing before Prod rollout.</li>
-                        <li>CodePush Rollback features.</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Stop using CodePush."</li>
-                        <li>"Tell users to reinstall the app."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
-        </div>
-
-        <!-- SECTION 3: iOS NATIVE -->
-        <div class="section-header">
-            <h2 class="section-title">Part 3: iOS Native (Swift)</h2>
-            <div class="section-subtitle">Memory, Concurrency & Security</div>
-        </div>
-
-        <!-- iOS Q1 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q1. Memory Management (ARC)</span>
-                <span class="q-tag">Core Swift</span>
-            </div>
-            <div class="q-scenario">
-                "We have a screen that users open and close frequently. We noticed the memory usage keeps climbing until the app crashes. How do you debug and fix this?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li>Identifies <strong>Retain Cycles</strong> (Strong references in closures/delegates).</li>
-                        <li>Uses `[weak self]` or `unowned`.</li>
-                        <li>Tools: <strong>Xcode Instruments (Leaks/Allocations)</strong> & Memory Graph.</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Call garbage collector." (iOS relies on ARC).</li>
-                        <li>"Clear cache manually."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
-        </div>
-
-        <!-- iOS Q2 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q2. Concurrency (Race Conditions)</span>
-                <span class="q-tag">Multithreading</span>
-            </div>
-            <div class="q-scenario">
-                "We are building a banking module. If two threads try to update the `balance` variable at the same time, the data gets corrupted. How do we make this thread-safe in modern Swift?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li><strong>Actors</strong> (Swift 5.5+): Actor isolation handles locking automatically.</li>
-                        <li><strong>DispatchQueue (Serial)</strong>: Traditional GCD approach.</li>
-                        <li>Explains Data Race hazards.</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Use `volatile` variables."</li>
-                        <li>"Use `NSLock`" (Valid but old school, Actors are preferred).</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
-        </div>
-
-        <!-- iOS Q3 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q3. App Architecture</span>
-                <span class="q-tag">Scalability</span>
-            </div>
-            <div class="q-scenario">
-                "Our app has grown to 100+ screens. The Massive View Controllers (MVC) are becoming unmaintainable. 20 developers are working on it. Which architecture do you propose?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li><strong>MVVM-C</strong> (Model-View-ViewModel + Coordinator).</li>
-                        <li><strong>VIPER</strong> (For strict separation of concerns).</li>
-                        <li>Focus on <strong>Testability</strong> (Protocol-oriented programming).</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Stick to MVC."</li>
-                        <li>"Put logic in the View."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
-        </div>
-
-        <!-- iOS Q4 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q4. Data Security (Keychain)</span>
-                <span class="q-tag">Security</span>
-            </div>
-            <div class="q-scenario">
-                "We need to store the user's Auth Token and Medical Encryption Keys on the device. Storing them in UserDefaults or a plist is insecure. Where do we put them?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li><strong>iOS Keychain</strong>.</li>
-                        <li><strong>Secure Enclave</strong> (Hardware-based security for keys).</li>
-                        <li>Biometric Access Control (FaceID) to read the keychain item.</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"UserDefaults is fine if we encode it."</li>
-                        <li>"Save it in a text file."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
-        </div>
-
-        <!-- iOS Q5 -->
-        <div class="question-card">
-            <div class="q-header">
-                <span class="q-title">Q5. Background Tasks</span>
-                <span class="q-tag">System Integration</span>
-            </div>
-            <div class="q-scenario">
-                "The app needs to upload large medical files even if the user puts the app in the background or locks the phone. Standard URLSession calls get suspended. How do we ensure the upload finishes?"
-            </div>
-            <div class="eval-grid">
-                <div class="eval-col pass-col">
-                    <span class="col-header text-success">✅ Green Flags</span>
-                    <ul>
-                        <li><strong>URLSessionConfiguration.background</strong>.</li>
-                        <li>Handling `handleEventsForBackgroundURLSession` in AppDelegate.</li>
-                        <li><strong>BGTaskScheduler</strong> for periodic syncs.</li>
-                    </ul>
-                </div>
-                <div class="eval-col fail-col">
-                    <span class="col-header text-danger">🚩 Red Flags</span>
-                    <ul>
-                        <li>"Keep the app open with a hack (play silent audio)." (Apple will reject).</li>
-                        <li>"It's not possible."</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="score-row"><span class="score-label">Score:</span><div class="star-circle">1</div><div class="star-circle">2</div><div class="star-circle">3</div><div class="star-circle">4</div><div class="star-circle">5</div></div>
-        </div>
-
-        <div class="footer">
-            <div>
-                <strong>Final Recommendation:</strong><br><br>
-                <input type="checkbox"> Strong Hire (Principal)&nbsp;&nbsp;
-                <input type="checkbox"> Hire (Senior)&nbsp;&nbsp;
-                <input type="checkbox"> Reject
-            </div>
-            <div style="text-align: right;">
-                <div class="signature-line"></div>
-                <small>Neha Desai (HR Signature)</small>
-            </div>
-        </div>
-
     </div>
+
+    <!-- NODE JS SECTION -->
+    <div id="node" class="role-section">
+        <div class="section-header">Node.js Assessment</div>
+
+        <!-- Q1 -->
+        <div class="question-card" id="node_q1">
+            <div class="q-header">Q1. Event Loop Blocking</div>
+            <div class="q-scenario">"Server hangs on PDF generation. How to fix?"</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>Worker Threads, Message Queue</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>Async/Await, Increase RAM</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('node_q1', 1)">1</div>
+                    <div class="score-btn" onclick="rate('node_q1', 2)">2</div>
+                    <div class="score-btn" onclick="rate('node_q1', 3)">3</div>
+                    <div class="score-btn" onclick="rate('node_q1', 4)">4</div>
+                    <div class="score-btn" onclick="rate('node_q1', 5)">5</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-card" id="node_q2">
+            <div class="q-header">Q2. Payment Transactions</div>
+            <div class="q-scenario">"Money deducted but DB crashed. Fix?"</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>Idempotency, 2PC, Cron Job</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>Trust Frontend, Manual Refund</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('node_q2', 1)">1</div>
+                    <div class="score-btn" onclick="rate('node_q2', 2)">2</div>
+                    <div class="score-btn" onclick="rate('node_q2', 3)">3</div>
+                    <div class="score-btn" onclick="rate('node_q2', 4)">4</div>
+                    <div class="score-btn" onclick="rate('node_q2', 5)">5</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-card" id="node_q3">
+            <div class="q-header">Q3. Memory (Streams)</div>
+            <div class="q-scenario">"Process 10GB file on 1GB RAM."</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>Streams (Pipeline), Chunking</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>fs.readFile, Increase RAM</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('node_q3', 1)">1</div>
+                    <div class="score-btn" onclick="rate('node_q3', 2)">2</div>
+                    <div class="score-btn" onclick="rate('node_q3', 3)">3</div>
+                    <div class="score-btn" onclick="rate('node_q3', 4)">4</div>
+                    <div class="score-btn" onclick="rate('node_q3', 5)">5</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-card" id="node_q4">
+            <div class="q-header">Q4. Concurrency Locking</div>
+            <div class="q-scenario">"Prevent double booking of last seat."</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>Pessimistic Lock, Redis Lock</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>If condition, Disable Button</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('node_q4', 1)">1</div>
+                    <div class="score-btn" onclick="rate('node_q4', 2)">2</div>
+                    <div class="score-btn" onclick="rate('node_q4', 3)">3</div>
+                    <div class="score-btn" onclick="rate('node_q4', 4)">4</div>
+                    <div class="score-btn" onclick="rate('node_q4', 5)">5</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-card" id="node_q5">
+            <div class="q-header">Q5. Microservices Latency</div>
+            <div class="q-scenario">"A->B->C->D chain is slow."</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>gRPC, Async Events, Caching</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>Monolith, Faster Servers</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('node_q5', 1)">1</div>
+                    <div class="score-btn" onclick="rate('node_q5', 2)">2</div>
+                    <div class="score-btn" onclick="rate('node_q5', 3)">3</div>
+                    <div class="score-btn" onclick="rate('node_q5', 4)">4</div>
+                    <div class="score-btn" onclick="rate('node_q5', 5)">5</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REACT NATIVE SECTION -->
+    <div id="react" class="role-section">
+        <div class="section-header">React Native Assessment</div>
+        
+        <div class="question-card" id="react_q1">
+            <div class="q-header">Q1. Bridge & JSI</div>
+            <div class="q-scenario">"Bridge too slow for high freq data. Fix?"</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>JSI, Native Modules, C++</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>AsyncStorage, Standard Bridge</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('react_q1', 1)">1</div>
+                    <div class="score-btn" onclick="rate('react_q1', 2)">2</div>
+                    <div class="score-btn" onclick="rate('react_q1', 3)">3</div>
+                    <div class="score-btn" onclick="rate('react_q1', 4)">4</div>
+                    <div class="score-btn" onclick="rate('react_q1', 5)">5</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" id="react_q2">
+            <div class="q-header">Q2. List Performance</div>
+            <div class="q-scenario">"Jerky scroll on Instagram-like feed."</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>FlashList, Memoization</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>ScrollView, Reduce Quality</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('react_q2', 1)">1</div>
+                    <div class="score-btn" onclick="rate('react_q2', 2)">2</div>
+                    <div class="score-btn" onclick="rate('react_q2', 3)">3</div>
+                    <div class="score-btn" onclick="rate('react_q2', 4)">4</div>
+                    <div class="score-btn" onclick="rate('react_q2', 5)">5</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" id="react_q3">
+            <div class="q-header">Q3. Offline First</div>
+            <div class="q-scenario">"Sync data from basement (No Net)."</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>WatermelonDB, Sync Queue</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>AsyncStorage, Block User</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('react_q3', 1)">1</div>
+                    <div class="score-btn" onclick="rate('react_q3', 2)">2</div>
+                    <div class="score-btn" onclick="rate('react_q3', 3)">3</div>
+                    <div class="score-btn" onclick="rate('react_q3', 4)">4</div>
+                    <div class="score-btn" onclick="rate('react_q3', 5)">5</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="question-card" id="react_q4">
+            <div class="q-header">Q4. Startup Time</div>
+            <div class="q-scenario">"App takes 5s to open. Fix?"</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>Hermes, Inline Requires</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>Splash Screen, Native rewrite</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('react_q4', 1)">1</div>
+                    <div class="score-btn" onclick="rate('react_q4', 2)">2</div>
+                    <div class="score-btn" onclick="rate('react_q4', 3)">3</div>
+                    <div class="score-btn" onclick="rate('react_q4', 4)">4</div>
+                    <div class="score-btn" onclick="rate('react_q4', 5)">5</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" id="react_q5">
+            <div class="q-header">Q5. CodePush Safety</div>
+            <div class="q-scenario">"JS update crashed app due to missing native lib."</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>Versioning, Staging Env</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>Stop CodePush, Reinstall</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('react_q5', 1)">1</div>
+                    <div class="score-btn" onclick="rate('react_q5', 2)">2</div>
+                    <div class="score-btn" onclick="rate('react_q5', 3)">3</div>
+                    <div class="score-btn" onclick="rate('react_q5', 4)">4</div>
+                    <div class="score-btn" onclick="rate('react_q5', 5)">5</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- IOS SECTION -->
+    <div id="ios" class="role-section">
+        <div class="section-header">iOS Native Assessment</div>
+        
+        <div class="question-card" id="ios_q1">
+            <div class="q-header">Q1. Memory (ARC)</div>
+            <div class="q-scenario">"Memory keeps climbing. Fix?"</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>Retain Cycles, [weak self]</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>Garbage Collector</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('ios_q1', 1)">1</div>
+                    <div class="score-btn" onclick="rate('ios_q1', 2)">2</div>
+                    <div class="score-btn" onclick="rate('ios_q1', 3)">3</div>
+                    <div class="score-btn" onclick="rate('ios_q1', 4)">4</div>
+                    <div class="score-btn" onclick="rate('ios_q1', 5)">5</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" id="ios_q2">
+            <div class="q-header">Q2. Concurrency</div>
+            <div class="q-scenario">"Race condition in Banking module."</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>Actors, Serial Queue</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>Volatile, NSLock</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('ios_q2', 1)">1</div>
+                    <div class="score-btn" onclick="rate('ios_q2', 2)">2</div>
+                    <div class="score-btn" onclick="rate('ios_q2', 3)">3</div>
+                    <div class="score-btn" onclick="rate('ios_q2', 4)">4</div>
+                    <div class="score-btn" onclick="rate('ios_q2', 5)">5</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" id="ios_q3">
+            <div class="q-header">Q3. Architecture</div>
+            <div class="q-scenario">"MVC is unmaintainable. Suggestion?"</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>MVVM-C, VIPER</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>Stick to MVC</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('ios_q3', 1)">1</div>
+                    <div class="score-btn" onclick="rate('ios_q3', 2)">2</div>
+                    <div class="score-btn" onclick="rate('ios_q3', 3)">3</div>
+                    <div class="score-btn" onclick="rate('ios_q3', 4)">4</div>
+                    <div class="score-btn" onclick="rate('ios_q3', 5)">5</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" id="ios_q4">
+            <div class="q-header">Q4. Security</div>
+            <div class="q-scenario">"Store Auth Token securely."</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>Keychain, Secure Enclave</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>UserDefaults</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('ios_q4', 1)">1</div>
+                    <div class="score-btn" onclick="rate('ios_q4', 2)">2</div>
+                    <div class="score-btn" onclick="rate('ios_q4', 3)">3</div>
+                    <div class="score-btn" onclick="rate('ios_q4', 4)">4</div>
+                    <div class="score-btn" onclick="rate('ios_q4', 5)">5</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" id="ios_q5">
+            <div class="q-header">Q5. Background Tasks</div>
+            <div class="q-scenario">"Upload file in background."</div>
+            <div class="eval-grid">
+                <div class="pass-col"><span class="text-success">✅ Pass</span>URLSessionConfig.background</div>
+                <div class="fail-col"><span class="text-danger">🚩 Fail</span>Silent Audio Hack</div>
+            </div>
+            <div class="scoring-area">
+                <span>Rating:</span>
+                <div class="score-btn-group">
+                    <div class="score-btn" onclick="rate('ios_q5', 1)">1</div>
+                    <div class="score-btn" onclick="rate('ios_q5', 2)">2</div>
+                    <div class="score-btn" onclick="rate('ios_q5', 3)">3</div>
+                    <div class="score-btn" onclick="rate('ios_q5', 4)">4</div>
+                    <div class="score-btn" onclick="rate('ios_q5', 5)">5</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final Submit -->
+    <div style="margin-top: 30px; text-align: center;">
+        <div style="margin-bottom: 20px;">
+            <label style="display:inline-block; margin-right: 15px;">
+                <input type="radio" name="result" value="Hire Principal"> Hire (Principal)
+            </label>
+            <label style="display:inline-block; margin-right: 15px;">
+                <input type="radio" name="result" value="Hire Senior"> Hire (Senior)
+            </label>
+            <label style="display:inline-block;">
+                <input type="radio" name="result" value="Reject"> Reject
+            </label>
+        </div>
+        <button class="submit-btn" onclick="submitData()">Final Submit to Google Sheet</button>
+        <p id="msg" style="margin-top: 10px; font-weight: bold;"></p>
+    </div>
+
+</div>
+
+<script>
+    // --- IMPORTANT: Paste your Google Script URL here ---
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdSaZXOT_Dly-N8771n9zCh1Tcsv7DpLHZ5I7bUVO5E8RRU5eP_gWW-f5OCu3BL7rqhA/exec";
+
+    // Store Scores
+    let scores = {};
+
+    function showSection() {
+        document.querySelectorAll('.role-section').forEach(el => el.classList.remove('active'));
+        const role = document.getElementById('roleSelect').value;
+        if(role) document.getElementById(role).classList.add('active');
+    }
+
+    function rate(qId, score) {
+        scores[qId] = score;
+        // Visual Update
+        const parent = document.getElementById(qId);
+        parent.querySelectorAll('.score-btn').forEach(btn => btn.classList.remove('selected'));
+        // Select clicked one
+        event.target.classList.add('selected');
+    }
+
+    function submitData() {
+        const name = document.getElementById('cName').value;
+        const mobile = document.getElementById('cMobile').value;
+        const role = document.getElementById('roleSelect').value;
+        const result = document.querySelector('input[name="result"]:checked')?.value;
+        const btn = document.querySelector('.submit-btn');
+        const msg = document.getElementById('msg');
+
+        if(!name || !mobile || !role || !result) {
+            alert("Please fill Name, Mobile, Role and Final Result.");
+            return;
+        }
+
+        if(GOOGLE_SCRIPT_URL.includes("REPLACE_THIS")) {
+            alert("Error: Google Script URL not set in code!");
+            return;
+        }
+
+        btn.disabled = true;
+        btn.innerText = "Submitting...";
+
+        // Collect scores for the selected role
+        let roleScores = [];
+        for(let i=1; i<=5; i++) {
+            roleScores.push(scores[`${role}_q${i}`] || 0);
+        }
+
+        const payload = {
+            name: name,
+            mobile: mobile,
+            role: role,
+            scores: roleScores,
+            finalResult: result
+        };
+
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        }).then(() => {
+            msg.innerText = "✅ Saved to Google Sheet Successfully!";
+            msg.style.color = "green";
+            btn.innerText = "Submitted";
+        }).catch(err => {
+            msg.innerText = "❌ Error Saving Data";
+            msg.style.color = "red";
+            btn.disabled = false;
+        });
+    }
+</script>
+
 </body>
 </html>
